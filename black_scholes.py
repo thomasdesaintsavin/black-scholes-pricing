@@ -75,6 +75,24 @@ def monte_carlo_call(S, K, T, r, sigma, n_simulations=200_000, seed=42):
     payoff = np.maximum(ST - K, 0.0)
     return math.exp(-r * T) * payoff.mean()
 
+def implied_vol_call(price_obs, S, K, T, r, sigma_init=0.2, tol=1e-8, max_iter=100):
+    """
+    Trouve la volatilité implicite (call) par Newton-Raphson.
+    price_obs = prix observé de l'option
+    """
+    sigma = max(1e-6, sigma_init)
+    for _ in range(max_iter):
+        # f(sigma) = BS_call(sigma) - prix_observé
+        f = black_scholes_call(S, K, T, r, sigma) - price_obs
+        # dérivée ≈ vega
+        v = vega(S, K, T, r, sigma)
+        if abs(v) < 1e-12:
+            break
+        step = f / v
+        sigma -= step
+        if abs(step) < tol:
+            return max(sigma, 0.0)
+    return max(sigma, 0.0)
 
 
 
@@ -88,3 +106,6 @@ if __name__ == "__main__":
     mc = monte_carlo_call(S, K, T, r, sigma, n_simulations=500_000)
     bs = black_scholes_call(S, K, T, r, sigma)
     print("Monte Carlo =", round(mc, 4), "| Black-Scholes =", round(bs, 4))
+    target = black_scholes_call(S, K, T, r, sigma)  # on génère un prix "observé"
+    iv = implied_vol_call(target, S, K, T, r, sigma_init=0.3)
+    print("Vol implicite ≈", round(iv, 4), "(sigma vrai =", sigma, ")")
