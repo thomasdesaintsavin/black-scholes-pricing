@@ -61,6 +61,23 @@ def rho_put(S, K, T, r, sigma):
     d2 = d1 - sigma * math.sqrt(T)
     return -K * T * math.exp(-r * T) * norm.cdf(-d2)
 
+
+
+import numpy as np
+
+def monte_carlo_call(S, K, T, r, sigma, n_simulations=200_000, seed=42):
+    """
+    Prix d'un call européen par simulation Monte Carlo.
+    """
+    rng = np.random.default_rng(seed)
+    Z = rng.standard_normal(n_simulations)
+    ST = S * np.exp((r - 0.5 * sigma**2) * T + sigma * math.sqrt(T) * Z)
+    payoff = np.maximum(ST - K, 0.0)
+    return math.exp(-r * T) * payoff.mean()
+
+
+
+
 # --- Exemple d’utilisation ---
 if __name__ == "__main__":
     S, K, T, r, sigma = 100, 100, 1, 0.05, 0.2
@@ -68,3 +85,6 @@ if __name__ == "__main__":
     print("Put  =", round(black_scholes_put(S, K, T, r, sigma), 2))
     print("Delta call =", round(delta_call(S, K, T, r, sigma), 4))
     print("Gamma =", round(gamma(S, K, T, r, sigma), 4))
+    mc = monte_carlo_call(S, K, T, r, sigma, n_simulations=500_000)
+    bs = black_scholes_call(S, K, T, r, sigma)
+    print("Monte Carlo =", round(mc, 4), "| Black-Scholes =", round(bs, 4))
