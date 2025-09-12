@@ -51,3 +51,21 @@ Les tests couvrent notamment :
 - la **volatilité implicite** : doit retrouver la valeur de σ à partir d’un prix donné
 - des **checks de cohérence sur les Greeks** (signes et plages attendues)
 
+# Lancer les tests
+
+Dans le terminal, à la racine du projet :
+pytest -q
+
+Exemple de sortie typique :
+4 passed in 0.37s
+
+
+# Structure
+
+black-scholes-pricing/
+├── black_scholes.py
+├── visualisation.py
+├── compare_mc_bs.py
+├── requirements.txt
+├── README.md
+└── LICENSE
