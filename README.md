@@ -69,3 +69,15 @@ black-scholes-pricing/
 ├── requirements.txt
 ├── README.md
 └── LICENSE
+
+# Application Streamlit
+
+Une application interactive est incluse pour manipuler le modèle Black-Scholes.  
+
+Lancer avec :
+streamlit run app.py
+
+Elle permet de :
+- Entrer les paramètres (S, K, T, r, σ)
+- Obtenir Call, Put et Greeks
+- Visualiser des courbes interactives (prix, delta, etc.)
