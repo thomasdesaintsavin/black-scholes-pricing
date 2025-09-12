@@ -40,3 +40,14 @@ Vol implicite ≈ 0.2000
 
 visualisation.py : prix du call en fonction de la volatilité
 compare_mc_bs.py : comparaison Monte Carlo vs Black-Scholes
+
+# Tests unitaires
+
+Une suite de tests basée sur `pytest` est incluse pour vérifier la robustesse du code.  
+Les tests couvrent notamment :
+
+- la **parité put-call** : vérifie que C - P ≈ S - K e^{-rT}
+- la **comparaison Monte Carlo vs Black-Scholes** : les prix doivent être proches (<2 % d’écart)
+- la **volatilité implicite** : doit retrouver la valeur de σ à partir d’un prix donné
+- des **checks de cohérence sur les Greeks** (signes et plages attendues)
+
