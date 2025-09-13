@@ -78,6 +78,18 @@ Lancer avec :
 streamlit run app.py
 
 Elle permet de :
+
+Onglet 1 – Black–Scholes & Greeks
 - Entrer les paramètres (S, K, T, r, σ)
 - Obtenir Call, Put et Greeks
 - Visualiser des courbes interactives (prix, delta, etc.)
+
+Onglet 2 – Smile (Yahoo Finance)
+- Connexion directe à **Yahoo Finance** pour récupérer :
+  - Le prix spot de l’action
+  - Les chaînes d’options (calls & puts) pour différentes échéances
+- Calcul de la **volatilité implicite** par inversion de Black–Scholes (méthode de Brent)
+- Construction et affichage du **smile de volatilité** en fonction du strike
+- Filtres pour la liquidité : volume minimal et bid-ask spread
+- Résultats affichés sous forme de **tableau + graphique interactif**
+
